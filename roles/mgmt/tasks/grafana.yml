@@ -63,7 +63,9 @@
 - name: Add influxdb datasource
   uri:
     url: "http://localhost:3000/api/datasources"
-    HEADER_Authorization: "Bearer {{grafana.api_key}}"
+    #HEADER_Authorization: "Bearer {{grafana.api_key}}"
+    header:
+      Authorization: "Bearer {{grafana.api_key}}"
     body:
       name: "influx"
       type: "influxdb"
