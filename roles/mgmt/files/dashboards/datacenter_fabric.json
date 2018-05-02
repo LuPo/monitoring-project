@@ -562,7 +562,7 @@
               ],
               "measurement": "net",
               "policy": "default",
-              "query": "SELECT derivative(\"bytes_sent\", 1s) FROM \"net\" WHERE \"host\" =~ /^$spines$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
+              "query": "SELECT derivative(\"bytes_sent\", 1s) FROM \"net\" WHERE \"host\" =~ /^$spine$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -586,7 +586,7 @@
                 {
                   "key": "host",
                   "operator": "=~",
-                  "value": "/^$spines$/"
+                  "value": "/^$spine$/"
                 },
                 {
                   "condition": "AND",
@@ -614,7 +614,7 @@
                 }
               ],
               "policy": "default",
-              "query": "SELECT derivative(\"bytes_recv\", 1s) FROM \"net\" WHERE \"host\" =~ /^$spines$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
+              "query": "SELECT derivative(\"bytes_recv\", 1s) FROM \"net\" WHERE \"host\" =~ /^$spine$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -725,7 +725,7 @@
               ],
               "measurement": "net",
               "policy": "default",
-              "query": "SELECT derivative(\"bytes_sent\", 1s) FROM \"net\" WHERE \"host\" =~ /^$leafs$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
+              "query": "SELECT derivative(\"bytes_sent\", 1s) FROM \"net\" WHERE \"host\" =~ /^$leaf$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -749,7 +749,7 @@
                 {
                   "key": "host",
                   "operator": "=~",
-                  "value": "/^$spines$/"
+                  "value": "/^$spine$/"
                 },
                 {
                   "condition": "AND",
@@ -777,7 +777,7 @@
                 }
               ],
               "policy": "default",
-              "query": "SELECT derivative(\"bytes_recv\", 1s) FROM \"net\" WHERE \"host\" =~ /^$leafs$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
+              "query": "SELECT derivative(\"bytes_recv\", 1s) FROM \"net\" WHERE \"host\" =~ /^$leaf$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -896,7 +896,7 @@
                 }
               ],
               "policy": "default",
-              "query": "SELECT derivative(\"packets_sent\", 1s) FROM \"net\" WHERE \"host\" =~ /^$spines$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
+              "query": "SELECT derivative(\"packets_sent\", 1s) FROM \"net\" WHERE \"host\" =~ /^$spine$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -934,7 +934,7 @@
                 }
               ],
               "policy": "default",
-              "query": "SELECT derivative(\"packets_recv\", 1s) FROM \"net\" WHERE \"host\" =~ /^$spines$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
+              "query": "SELECT derivative(\"packets_recv\", 1s) FROM \"net\" WHERE \"host\" =~ /^$spine$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -1044,7 +1044,7 @@
                 }
               ],
               "policy": "default",
-              "query": "SELECT derivative(\"packets_sent\", 1s) FROM \"net\" WHERE \"host\" =~ /^$leafs$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
+              "query": "SELECT derivative(\"packets_sent\", 1s) FROM \"net\" WHERE \"host\" =~ /^$leaf$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1082,7 +1082,7 @@
                 }
               ],
               "policy": "default",
-              "query": "SELECT derivative(\"packets_recv\", 1s) FROM \"net\" WHERE \"host\" =~ /^$leafs$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
+              "query": "SELECT derivative(\"packets_recv\", 1s) FROM \"net\" WHERE \"host\" =~ /^$leaf$/ AND \"interface\" =~ /^$interfaces$/ AND $timeFilter GROUP BY \"host\", \"interface\"",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -1321,7 +1321,7 @@
                 }
               ],
               "policy": "default",
-              "query": "SELECT \"num_peers\" FROM \"bgpstat\" WHERE \"host\" =~ /^$spines$/ AND $timeFilter GROUP BY \"host\"",
+              "query": "SELECT \"num_peers\" FROM \"bgpstat\" WHERE \"host\" =~ /^$spine$/ AND $timeFilter GROUP BY \"host\"",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1413,7 +1413,7 @@
                 }
               ],
               "policy": "default",
-              "query": "SELECT \"num_peers\" FROM \"bgpstat\" WHERE \"host\" =~ /^$leafs$/ AND $timeFilter GROUP BY \"host\"",
+              "query": "SELECT \"num_peers\" FROM \"bgpstat\" WHERE \"host\" =~ /^$leaf$/ AND $timeFilter GROUP BY \"host\"",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1480,7 +1480,7 @@
         "hide": 0,
         "includeAll": false,
         "multi": true,
-        "name": "leafs",
+        "name": "leaf",
         "options": [],
         "query": "show tag values from cpu with key = host where role = 'leaf'",
         "refresh": 1,
@@ -1494,7 +1494,7 @@
         "hide": 0,
         "includeAll": false,
         "multi": true,
-        "name": "spines",
+        "name": "spine",
         "options": [],
         "query": "show tag values from cpu with key = \"host\" where role = 'spine'",
         "refresh": 1,

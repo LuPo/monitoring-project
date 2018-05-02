@@ -32,8 +32,10 @@ def bgp_neighbor_information():
     # TODO: When this is fixed we can replace the show ip bgp sum
     # command with just "show ip bgp neighbor json" and iterate
 
+    # Fixed already
+
     neighbor_sum_output = run_json_command(
-        [sudo, vtysh, "-c", 'show ip bgp sum json'])
+        [sudo, vtysh, "-c", 'show ip bgp neighbor json'])
 
     # if bgp is not configured no output is returned
     if len(neighbor_sum_output) == 0:
@@ -42,7 +44,7 @@ def bgp_neighbor_information():
 
     json_neighbor_sum = json.loads(neighbor_sum_output.decode('utf-8'))
 
-    if len(json_neighbor_sum["peers"]) == 0:
+    if len(json_neighbor_sum) == 0:
         print("No BGP peers found. Are any BGP peers configured?")
         exit(3)
 
@@ -52,32 +54,35 @@ def bgp_neighbor_information():
     num_peers=0
     failed_peers=0
 
-    for peer in json_neighbor_sum["peers"].keys():
+    for peer in json_neighbor_sum.keys():
 
-        #Check if the current state of the peer is establishes to count number of up peers
-        if json_neighbor_sum["peers"][peer]["state"] == "Established":
-            num_peers += 1
-        else:
-            failed_peers += 1
+        #"bestPath" seems to be added as a key if  multiPathRelax is defined
+        if peer != 'bestPath':
+            #Check if the current state of the peer is establishes to count number of up peers
+            if json_neighbor_sum[peer]["bgpState"] == "Established":
+                num_peers += 1
+            else:
+                failed_peers += 1
 
 
-        peer_output = run_json_command(
-            [sudo, vtysh, "-c", 'show ip bgp neighbor ' + peer + ' json'])
+            peer_output = run_json_command(
+                [sudo, vtysh, "-c", 'show ip bgp neighbor ' + peer + ' json'])
 
-        if len(peer_output) == 0:
-            print("No neighbor output for peer" + peer + ".")
-            exit(3)
+            if len(peer_output) == 0:
+                print("No neighbor output for peer" + peer + ".")
+                exit(3)
 
-        peer_output_json = json.loads(peer_output.decode('utf-8'))
+            peer_output_json = json.loads(peer_output.decode('utf-8'))
 
-        if peer not in peer_output_json:
-            print("Provided peer " + peer + " not found.")
-            exit(3)
-        for stat, value in peer_output_json[peer]["messageStats"].items():
-            # bgpstat,host=leaf1,peer=swp2 totalSent=6520
-            # print("bgpstat,host=" + socket.gethostname() + ",peer=" + peer + " " + stat.encode('ascii') + "=" + str(value))
-            data.add_row({"peer":peer},{stat:str(value)})
-    # data.add_row({},{"num_peers":len(json_neighbor_sum["peers"])})
+            if peer not in peer_output_json:
+                print("Provided peer " + peer + " not found.")
+                exit(3)
+            for stat, value in peer_output_json[peer]["messageStats"].items():
+                # bgpstat,host=leaf1,peer=swp2 totalSent=6520
+                # print("bgpstat,host=" + socket.gethostname() + ",peer=" + peer + " " + stat.encode('ascii') + "=" + str(value))
+                data.add_row({"peer":peer},{stat:str(value)})
+
+    # data.add_row({},{"num_peers":len(json_neighbor_sum["ipv4Unicast"]["peers"])})
     data.add_row({},{"num_peers":num_peers, "failed_peers":failed_peers})
 
     #data.show_data()
@@ -88,4 +93,3 @@ if __name__ == "__main__":
     bgp_neighbor_information()
 
     exit(0)
-

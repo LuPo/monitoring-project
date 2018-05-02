@@ -67,7 +67,7 @@ Clone the health-monitoring-checks repo and change to the influx-grafana branch.
     2a Creates an API key for Grafana to leverage HTTP API
     2b Adds InfluxDB as a datasource
     2c Uploads dashboard to Grafana
-    3 Installs Telegraf and all leafs and spines and copies over all the checks.
+    3 Installs Telegraf and all leaf and spine and copies over all the checks.
     3a Configures Telegraf to run all the scripts and upload data to InfluxDB
     To access the Grafana GUI, set up port forwarding on VirtualBox so that port 3000 is accessible.
 
@@ -115,7 +115,7 @@ InfluxDB takes data via an HTTP post using the following format:
 
 The tag=keys are tags that are used to identify the measurement. The tag=values are the measurement itself. Here is a sample of a real measurement:
 
-    iface_states,host=leaf01,role=leafs,iface=swp1,datacenter=RTP pkts_rx=1000,pkts_tx=1100,bytes_rx=1200,bytes_tx=1300
+    iface_states,host=leaf01,role=leaf,iface=swp1,datacenter=RTP pkts_rx=1000,pkts_tx=1100,bytes_rx=1200,bytes_tx=1300
 
 Here is the final configuration for the exec plugin that appears on /etc/telegraf/telegraf.conf:
 

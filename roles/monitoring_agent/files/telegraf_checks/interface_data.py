@@ -22,7 +22,7 @@ def collect_data():
         data.add_row({"interface":item},{"RX_DRP":parsed_output[item]['RX_DRP']})
         data.add_row({"interface":item},{"TX_DRP":parsed_output[item]['TX_DRP']})
 
-    output=subprocess.check_output(['/usr/bin/netshow interface all -j'],shell=True)
+    output=subprocess.check_output(['net show interface all json'],shell=True)
     parsed_output=json.loads(output)
 
     for item in parsed_output:

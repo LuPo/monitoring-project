@@ -1,9 +1,7 @@
 ---
 - name: Install Kapacitor
   apt:
-    name: kapacitor
-    update_cache: yes
-    state: present
+    deb: https://dl.influxdata.com/kapacitor/releases/kapacitor_1.4.0_amd64.deb
 
 - name: Apply Kapacitor configuration
   template: src=kapacitor.conf.j2 dest=/etc/kapacitor/kapacitor.conf backup=yes
