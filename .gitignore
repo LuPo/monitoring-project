@@ -1,0 +1,3 @@
+hosts
+private_vault.txt
+roles/mgmt/vars/main.yml
